@@ -42,17 +42,59 @@ struct ContentView: View {
             }
             Spacer()
             CustomText(text: "player One: \(playerOne)")
+            HStack {
+                Button("Roll") {
+                    chooseRandom(times: 3)
+                    withAnimation(.interpolatingSpring(stiffness: 10, damping: 2)) {
+                        rotation += 360
+                    }
+                }
+                .buttonStyle(CustomButtonStyle())
+            }
             CustomText(text: "player Two: \(playerTwo)")
             Spacer()
         }
-        .font(.custom("block_out", size: 26))
+        //.font(.custom("block_out", size: 26))
       }
+    }
+    func endTurn() {
+        playerOne = 0
+        playerTwo = 0
+    }
+    func chooseRandom(times: Int) {
+        if times > 0 {
+            DispatchQueue.main.asyncAfter(deadline:  .now() + 1) {
+                randomeValue = Int.random(in: 1...6)
+                chooseRandom(times: times - 1)
+            }
+        }
+        if times == 0 {
+            if randomeValue == 1 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    endTurn()
+                }
+            }
+            else {
+                playerOne += playerTwo
+            }
+        }
     }
 }
 struct CustomText: View {
     let text: String
     var body: some View {
-        Text(text).font(Font.custom("block_out", size: 36))
+        Text(text).font(Font.custom("MetalMania-Regular", size: 36))
+    }
+}
+struct CustomButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .frame(width: 50)
+            .font(Font.custom("MetalMania-Regular", size: 24))
+            .padding()
+            .background(.black).opacity(configuration.isPressed ? 0.0 : 1.0)
+            .foregroundColor(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 struct ContentView_Previews: PreviewProvider {

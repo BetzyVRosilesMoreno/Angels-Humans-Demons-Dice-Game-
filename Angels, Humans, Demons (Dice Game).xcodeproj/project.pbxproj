@@ -11,7 +11,7 @@
 		52AB11802B1E26DD004B37D1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB117F2B1E26DD004B37D1 /* ContentView.swift */; };
 		52AB11822B1E26DF004B37D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52AB11812B1E26DF004B37D1 /* Assets.xcassets */; };
 		52AB11852B1E26DF004B37D1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52AB11842B1E26DF004B37D1 /* Preview Assets.xcassets */; };
-		52AB118C2B236E67004B37D1 /* block_out.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52AB118B2B236E67004B37D1 /* block_out.ttf */; };
+		52AB11B02B2A0512004B37D1 /* MetalMania-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52AB11AF2B2A0512004B37D1 /* MetalMania-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,8 +20,8 @@
 		52AB117F2B1E26DD004B37D1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		52AB11812B1E26DF004B37D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52AB11842B1E26DF004B37D1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		52AB118B2B236E67004B37D1 /* block_out.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = block_out.ttf; sourceTree = "<group>"; };
 		52AB118D2B236F4B004B37D1 /* Angels--Humans--Demons--Dice-Game--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Angels--Humans--Demons--Dice-Game--Info.plist"; sourceTree = SOURCE_ROOT; };
+		52AB11AF2B2A0512004B37D1 /* MetalMania-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MetalMania-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +57,8 @@
 				52AB118D2B236F4B004B37D1 /* Angels--Humans--Demons--Dice-Game--Info.plist */,
 				52AB117D2B1E26DD004B37D1 /* Angels__Humans__Demons__Dice_Game_App.swift */,
 				52AB117F2B1E26DD004B37D1 /* ContentView.swift */,
-				52AB118B2B236E67004B37D1 /* block_out.ttf */,
 				52AB11812B1E26DF004B37D1 /* Assets.xcassets */,
+				52AB11AF2B2A0512004B37D1 /* MetalMania-Regular.ttf */,
 				52AB11832B1E26DF004B37D1 /* Preview Content */,
 			);
 			path = "Angels, Humans, Demons (Dice Game)";
@@ -130,9 +130,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52AB11B02B2A0512004B37D1 /* MetalMania-Regular.ttf in Resources */,
 				52AB11852B1E26DF004B37D1 /* Preview Assets.xcassets in Resources */,
 				52AB11822B1E26DF004B37D1 /* Assets.xcassets in Resources */,
-				52AB118C2B236E67004B37D1 /* block_out.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
