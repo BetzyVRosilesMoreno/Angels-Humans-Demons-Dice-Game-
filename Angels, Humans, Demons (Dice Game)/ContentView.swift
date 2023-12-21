@@ -8,16 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var playerOne = 0
-    @State private var playerTwo = 0
+    @State private var playerOneTurn = true
+    @State private var playerOneScore = 0
+    @State private var playerTwoScore = 0
+    @State private var numberOfTurns = 1
     @State private var randomValue = [0, 0, 0]
     @State private var rotation = 0.0
+    @State private var gameOver = false
+    @State private var winMessage = ""
     var body: some View {
         NavigationView() {
             ZStack {
                 Color.brown.opacity(0.7).ignoresSafeArea()
                 VStack {
-                    Image("Logo").resizable().frame(width: 260, height: 260)
+                    Image("Logo").resizable().frame(width: 260, height: 200)
                     CustomText(text: "Angels, Humans, Demons")
                     HStack {
                         Image("Demon Dice \(randomValue[0])")
@@ -41,18 +45,17 @@ struct ContentView: View {
                             .rotation3DEffect(.degrees(rotation), axis: (x: 1, y: 1, z: 0))
                             .padding()
                     }
-                    Spacer()
-                    CustomText(text: "player One: \(playerOne)")
-                    HStack {
-                        Button("Roll") {
-                            chooseRandom(times: 3)
-                            withAnimation(.interpolatingSpring(stiffness: 10, damping: 2)) {
-                                rotation += 360
-                            }
+                    CustomText(text: playerOneTurn ? "Player One Turn" : "Player Two Turn")
+                    CustomText(text: "Turn Number: \(numberOfTurns)")
+                    Button("Roll") {
+                        chooseRandom(times: 3)
+                        withAnimation(.interpolatingSpring(stiffness: 10, damping: 2)) {
+                            rotation += 360
                         }
-                        .buttonStyle(CustomButtonStyle())
                     }
-                    CustomText(text: "player Two: \(playerTwo)")
+                    .buttonStyle(CustomButtonStyle())
+                    CustomText(text: "player One: \(playerOneScore)")
+                    CustomText(text: "player Two: \(playerTwoScore)")
                     NavigationLink("How to play", destination: InstructionsView())
                         .font(Font.custom("MetalMania-Regular", size: 24))
                         .padding()
@@ -61,11 +64,14 @@ struct ContentView: View {
                 //.font(.custom("block_out", size: 26))
             }
         }
+        .alert(isPresented: $gameOver) {
+            Alert(title: Text(winMessage), dismissButton: .destructive(Text("Play again"),
+                action: {
+                resetGame()
+            }))
+        }
     }
-    func endTurn() {
-        playerOne = 0
-        playerTwo = 0
-    }
+    
     func chooseRandom(times: Int) {
         if times > 0 {
             DispatchQueue.main.asyncAfter(deadline:  .now() + 1) {
@@ -75,24 +81,58 @@ struct ContentView: View {
                 chooseRandom(times: times - 1)
             }
         }
-        if times == 0 {
-            if randomValue[0] == 1 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    endTurn()
+        else {
+            let rollTotal = randomValue[0] + randomValue[1] + randomValue[2]
+            if playerOneTurn {
+                playerOneScore += rollTotal
+            }
+            else {
+                playerTwoScore += rollTotal
+                numberOfTurns += 1
+            }
+            if playerOneScore >= 130 {
+                winMessage = "Player One is an Angel"
+                gameOver = true
+            }
+            else if playerTwoScore >= 130 {
+                winMessage = "Player Two is an Angel"
+                gameOver = true
+            }
+            else if numberOfTurns > 10 {
+                if playerOneScore > playerTwoScore {
+                    winMessage = "Player One is a Human\nPlayer Two is a Demon"
+                    gameOver = true
+                }
+                if playerOneScore < playerTwoScore {
+                    winMessage = "Player One is a Demon\nPlayer Two is a Human"
+                    gameOver = true
+                }
+                else {
+                    winMessage = "Player One is a Human\nPlayer Two is a Human"
+                    gameOver = true
                 }
             }
             else {
-                playerOne += playerTwo
+                playerOneTurn.toggle()
             }
         }
     }
+    
+    func resetGame() {
+        playerOneScore = 0
+        playerTwoScore = 0
+        numberOfTurns = 0
+        gameOver = false
+    }
 }
+
 struct CustomText: View {
     let text: String
     var body: some View {
         Text(text).font(Font.custom("MetalMania-Regular", size: 36))
     }
 }
+
 struct CustomButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -104,6 +144,7 @@ struct CustomButtonStyle: ButtonStyle {
             .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
+
 struct InstructionsView: View {
     var body: some View {
         ZStack {
@@ -129,6 +170,7 @@ struct InstructionsView: View {
         }
     }
 }
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
